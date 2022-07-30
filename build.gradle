@@ -41,6 +41,14 @@ repositories {
     }
 }
 
+// application jars
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = false
+}
+
 // all projects
 allprojects {
     group = "com.witalis.jkit"
