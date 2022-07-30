@@ -1,0 +1,19 @@
+# modules
+.git
+.gradle
+.docker
+.idea
+# folders
+/gradle
+/output
+/lib
+/log
+/res
+# files
+*.bak
+*.tmp
+*.log
+*.war
+**/.cache
+**/*.class
+/*.*

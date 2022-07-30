@@ -1,0 +1,16 @@
+// application
+mainClassName = "com.witalis.jkit.usage.core.JkitUsageApplication"
+
+// extension
+ext {
+    groupId = "usage";
+    moduleId = "com.witalis.jkit.usage.core"
+}
+
+// dependency
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-tomcat"
+    implementation "com.google.guava:guava:31.+"
+    implementation "org.apache.commons:commons-lang3:3+"
+    implementation "commons-codec:commons-codec:1.+"
+}

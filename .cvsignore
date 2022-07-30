@@ -1,0 +1,12 @@
+.gradle*
+.docker*
+.idea*
+.git*
+
+*.class
+*.log
+*.bak
+*.tmp
+
+/invoke/log*
+/output/log*

@@ -1,0 +1,4 @@
+// project
+rootProject.name = 'course-jkit'
+// module
+include ':module:usage'

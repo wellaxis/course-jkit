@@ -1,0 +1,1 @@
+50 123,5 Value 45.33 true 73 false Done.

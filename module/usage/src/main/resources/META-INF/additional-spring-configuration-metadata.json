@@ -1,0 +1,332 @@
+{
+  "groups": [
+    {
+      "name": "usage-config",
+      "type": "org.springframework.boot.autoconfigure.web.ServerProperties",
+      "sourceType": "org.springframework.boot.autoconfigure.web.ServerProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "process",
+      "type": "java.lang.String",
+      "description": "The processing configuration."
+    },
+    {
+      "name": "process.invoker",
+      "type": "java.lang.String",
+      "description": "The invoker environment."
+    },
+    {
+      "name": "process.invoker.activate",
+      "type": "java.lang.Boolean",
+      "description": "The invoker activation indicator.",
+      "defaultValue": true
+    },
+    {
+      "name": "process.invoker.sections",
+      "type": "java.lang.String",
+      "description": "The list of invoker sections.",
+      "defaultValue": "all"
+    },
+    {
+      "name": "process.handler",
+      "type": "java.lang.String",
+      "description": "The handler environment."
+    },
+    {
+      "name": "process.handler.activate",
+      "type": "java.lang.Boolean",
+      "description": "The handler activation indicator.",
+      "defaultValue": false
+    },
+    {
+      "name": "process.handler.sections",
+      "type": "java.lang.String",
+      "description": "The list of handler sections.",
+      "defaultValue": "none"
+    }
+  ],
+  "hints": [
+    {
+      "name": "process.invoker.activate",
+      "values": [
+        {
+          "value": "false",
+          "description": "To disable invoker functionality. Default behaviour."
+        },
+        {
+          "value": "true",
+          "description": "To enable invoker functionality."
+        }
+      ]
+    },
+    {
+      "name": "process.invoker.sections",
+      "values": [
+        {
+          "value": "all",
+          "description": "To enable all invoker sections. Default behaviour."
+        },
+        {
+          "value": "none",
+          "description": "To disable all invoker sections."
+        },
+        {
+          "value": "abstraction",
+          "description": "To enable invoker abstraction section."
+        },
+        {
+          "value": "annotation",
+          "description": "To enable invoker annotation section."
+        },
+        {
+          "value": "applets",
+          "description": "To enable invoker applets section."
+        },
+        {
+          "value": "assertion",
+          "description": "To enable invoker assertion section."
+        },
+        {
+          "value": "beans",
+          "description": "To enable invoker beans section."
+        },
+        {
+          "value": "bits",
+          "description": "To enable invoker bits section."
+        },
+        {
+          "value": "blocks",
+          "description": "To enable invoker blocks section."
+        },
+        {
+          "value": "classes",
+          "description": "To enable invoker classes section."
+        },
+        {
+          "value": "cloning",
+          "description": "To enable invoker cloning section."
+        },
+        {
+          "value": "collection",
+          "description": "To enable invoker collection section."
+        },
+        {
+          "value": "constants",
+          "description": "To enable invoker constants section."
+        },
+        {
+          "value": "constructors",
+          "description": "To enable invoker constructors section."
+        },
+        {
+          "value": "core",
+          "description": "To enable invoker core section."
+        },
+        {
+          "value": "dates",
+          "description": "To enable invoker dates section."
+        },
+        {
+          "value": "encapsulation",
+          "description": "To enable invoker encapsulation section."
+        },
+        {
+          "value": "enumeration",
+          "description": "To enable invoker enumeration section."
+        },
+        {
+          "value": "events",
+          "description": "To enable invoker events section."
+        },
+        {
+          "value": "exception",
+          "description": "To enable invoker exception section."
+        },
+        {
+          "value": "formats",
+          "description": "To enable invoker formats section."
+        },
+        {
+          "value": "garbage",
+          "description": "To enable invoker garbage section."
+        },
+        {
+          "value": "generics",
+          "description": "To enable invoker generics section."
+        },
+        {
+          "value": "graphics",
+          "description": "To enable invoker graphics section."
+        },
+        {
+          "value": "inheritance",
+          "description": "To enable invoker inheritance section."
+        },
+        {
+          "value": "interfaces",
+          "description": "To enable invoker interfaces section."
+        },
+        {
+          "value": "io",
+          "description": "To enable invoker io section."
+        },
+        {
+          "value": "keywords",
+          "description": "To enable invoker keywords section."
+        },
+        {
+          "value": "lambda",
+          "description": "To enable invoker lambda section."
+        },
+        {
+          "value": "methods",
+          "description": "To enable invoker methods section."
+        },
+        {
+          "value": "modifiers",
+          "description": "To enable invoker modifiers section."
+        },
+        {
+          "value": "modules",
+          "description": "To enable invoker modules section."
+        },
+        {
+          "value": "multithreading",
+          "description": "To enable invoker multithreading section."
+        },
+        {
+          "value": "networks",
+          "description": "To enable invoker networks section."
+        },
+        {
+          "value": "numbers",
+          "description": "To enable invoker numbers section."
+        },
+        {
+          "value": "oop",
+          "description": "To enable invoker object-oriented programming section."
+        },
+        {
+          "value": "operators",
+          "description": "To enable invoker operators section."
+        },
+        {
+          "value": "overloading",
+          "description": "To enable invoker overloading section."
+        },
+        {
+          "value": "overriding",
+          "description": "To enable invoker overriding section."
+        },
+        {
+          "value": "packages",
+          "description": "To enable invoker packages section."
+        },
+        {
+          "value": "patterns",
+          "description": "To enable invoker patterns section."
+        },
+        {
+          "value": "polymorphism",
+          "description": "To enable invoker polymorphism section."
+        },
+        {
+          "value": "primitives",
+          "description": "To enable invoker primitives section."
+        },
+        {
+          "value": "profile",
+          "description": "To enable invoker profile section."
+        },
+        {
+          "value": "properties",
+          "description": "To enable invoker properties section."
+        },
+        {
+          "value": "recursion",
+          "description": "To enable invoker recursion section."
+        },
+        {
+          "value": "references",
+          "description": "To enable invoker references section."
+        },
+        {
+          "value": "reflection",
+          "description": "To enable invoker reflection section."
+        },
+        {
+          "value": "regexp",
+          "description": "To enable invoker regexp section."
+        },
+        {
+          "value": "security",
+          "description": "To enable invoker security section."
+        },
+        {
+          "value": "servlets",
+          "description": "To enable invoker servlets section."
+        },
+        {
+          "value": "statements",
+          "description": "To enable invoker statements section."
+        },
+        {
+          "value": "streams",
+          "description": "To enable invoker streams section."
+        },
+        {
+          "value": "strings",
+          "description": "To enable invoker strings section."
+        },
+        {
+          "value": "system",
+          "description": "To enable invoker system section."
+        },
+        {
+          "value": "tokens",
+          "description": "To enable invoker tokens section."
+        },
+        {
+          "value": "types",
+          "description": "To enable invoker data types section."
+        },
+        {
+          "value": "utils",
+          "description": "To enable invoker utils section."
+        },
+        {
+          "value": "variables",
+          "description": "To enable invoker variables section."
+        }
+      ]
+    },
+    {
+      "name": "process.handler.activate",
+      "values": [
+        {
+          "value": "false",
+          "description": "To disable handler functionality. Default behaviour."
+        },
+        {
+          "value": "true",
+          "description": "To enable handler functionality."
+        }
+      ]
+    },
+    {
+      "name": "process.handler.sections",
+      "values": [
+        {
+          "value": "all",
+          "description": "To enable all handler sections. Default behaviour."
+        },
+        {
+          "value": "none",
+          "description": "To disable all handler sections."
+        }
+      ]
+    }
+  ]
+}
