@@ -3,7 +3,7 @@ mainClassName = "com.witalis.jkit.usage.core.JkitUsageApplication"
 
 // extension
 ext {
-    groupId = "usage";
+    groupId = "usage"
     moduleId = "com.witalis.jkit.usage.core"
 }
 
