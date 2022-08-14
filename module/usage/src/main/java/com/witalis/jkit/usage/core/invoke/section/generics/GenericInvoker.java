@@ -80,7 +80,7 @@ public class GenericInvoker extends Invoker {
         // tab
         log.info("");
         // variances
-        log.info("-- Variances");
+        log.info("## Variances");
         invokeVariances();
     }
 
@@ -162,6 +162,27 @@ public class GenericInvoker extends Invoker {
             Stats<Double> dStats = new Stats<>(new Double[]{1.34, 1.8d, 0.99, 3.0, -7d});
             log.info("Stats[D] average: " + dStats.average());
             log.info("Stats[D] sameAvg: " + dStats.wildAvg(new Stats<>(new Integer[]{0, 1, 2})));
+        }
+
+        // validation types
+        {
+            // raw types
+            log.info("Equality [raw-1]: {}", Gen.class.equals(Gen.class));
+
+            Gen a = new Gen("One");
+            Gen b = new Gen(1);
+
+            log.info("Equality [raw-2]: {}", a.getClass().equals(b.getClass()));
+
+            // generic types
+            Gen<? extends String> c = new Gen<>("One");
+            Gen<? extends Integer> d = new Gen<>(1);
+
+            log.info("Equality [generic-1]: {}", c.getClass().equals(d.getClass()));
+
+            Gen<?> e = new Gen<>(new Object());
+
+            log.info("Equality [generic-2]: {}", c.getClass().equals(e.getClass()));
         }
     }
 

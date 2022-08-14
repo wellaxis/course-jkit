@@ -17,7 +17,7 @@ process:
   invoker:
     activate: true
     sections:
-      - core
+      - generics
   handler:
     activate: false
     sections:
