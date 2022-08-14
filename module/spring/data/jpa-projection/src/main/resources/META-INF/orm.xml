@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+    version="2.1">
+
+    <!-- JPQL: Planet Details Ordered -->
+    <named-query name="Planet.optDetails">
+        <query>
+            SELECT p FROM Planet p ORDER BY p.name ASC
+        </query>
+    </named-query>
+
+    <!-- JPQL: Moon Details Ordered -->
+    <named-query name="Moon.optDetails">
+        <query>
+            SELECT m FROM Moon m ORDER BY m.name DESC
+        </query>
+    </named-query>
+
+    <!-- NATIVE: Planet Details By Type -->
+    <named-native-query name="Planet.getDetails"
+                        result-class="com.witalis.jkit.spring.data.jpa.projection.model.Planet">
+        <query>
+            <![CDATA[
+                SELECT P.*
+                FROM   PLANET P
+                WHERE  P.TYPE = :planetType
+            ]]>
+        </query>
+    </named-native-query>
+
+    <!-- NATIVE: Moon Details By Planet ID -->
+    <named-native-query name="Moon.getDetails"
+                        result-class="com.witalis.jkit.spring.data.jpa.projection.model.PlanetMoon">
+        <query>
+            <![CDATA[
+                SELECT M.*
+                FROM   MOON M
+                WHERE  M.PLANET_ID = :planetId
+            ]]>
+        </query>
+    </named-native-query>
+</entity-mappings>

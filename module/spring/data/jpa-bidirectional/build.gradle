@@ -1,0 +1,27 @@
+// application
+mainClassName = "com.witalis.jkit.spring.data.jpa.bidirectional.JkitDataJpaBidirectional"
+
+// extension
+ext {
+    groupId = "jpa-bidirectional"
+    moduleId = "com.witalis.jkit.spring.data.jpa.bidirectional"
+}
+
+// repository
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+// dependency
+dependencies {
+    // database
+    implementation "com.h2database:h2:1.+"
+    // boot
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-tomcat"
+    // others
+    developmentOnly "org.springframework.boot:spring-boot-devtools"
+}
