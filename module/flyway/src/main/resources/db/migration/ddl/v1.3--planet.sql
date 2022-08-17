@@ -1,0 +1,22 @@
+-- table
+CREATE TABLE PLANET (
+    ID                   BIGINT NOT NULL,
+    NAME                 VARCHAR(100) NOT NULL,
+    SYSTEM_ID            BIGINT,
+    TYPE                 PLANET_TYPE,
+    SIGN                 CHAR(1),
+    NOTE                 TEXT
+);
+-- sequence
+CREATE SEQUENCE PLANET_SEQ START WITH 1001 INCREMENT BY 1;
+-- index
+ALTER TABLE PLANET ADD CONSTRAINT PKP_ID PRIMARY KEY (ID);
+ALTER TABLE PLANET ADD CONSTRAINT FKP_SYSTEM_ID FOREIGN KEY (SYSTEM_ID) REFERENCES PLANET_SYSTEM(ID);
+-- comment
+COMMENT ON TABLE PLANET IS 'Entity representing planet.';
+COMMENT ON COLUMN PLANET.ID IS 'Planet identifier. Primary Key.';
+COMMENT ON COLUMN PLANET.NAME IS 'Name of the planet.';
+COMMENT ON COLUMN PLANET.SYSTEM_ID IS 'ID of the planet system.';
+COMMENT ON COLUMN PLANET.TYPE IS 'Type of the planet.';
+COMMENT ON COLUMN PLANET.SIGN IS 'Sign of the planet.';
+COMMENT ON COLUMN PLANET.NOTE IS 'Note of the planet.';

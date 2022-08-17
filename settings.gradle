@@ -8,3 +8,5 @@ include ':module:spring:data:jpa-bidirectional'
 include ':module:spring:data:jpa-n-plus-one'
 include ':module:spring:data:jpa-pagination'
 include ':module:spring:data:jpa-projection'
+// flyway
+include ':module:flyway'

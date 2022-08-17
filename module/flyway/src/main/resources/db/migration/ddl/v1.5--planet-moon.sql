@@ -1,0 +1,22 @@
+-- table
+CREATE TABLE PLANET_MOON (
+    ID                   BIGINT NOT NULL,
+    PLANET_ID            BIGINT NOT NULL,
+    NAME                 VARCHAR(100) NOT NULL,
+    DISTANCE             NUMERIC(10, 2),
+    RADIUS               NUMERIC(10, 3),
+    NOTE                 TEXT
+);
+-- sequence
+CREATE SEQUENCE PLANET_MOON_SEQ START WITH 1001 INCREMENT BY 1;
+-- index
+ALTER TABLE PLANET_MOON ADD CONSTRAINT PKPM_ID PRIMARY KEY (ID);
+ALTER TABLE PLANET_MOON ADD CONSTRAINT FKPM_PLANET_ID FOREIGN KEY (PLANET_ID) REFERENCES PLANET(ID);
+-- comment
+COMMENT ON TABLE PLANET_MOON IS 'Entity representing planet moon.';
+COMMENT ON COLUMN PLANET_MOON.ID IS 'Planet moon identifier. Primary Key.';
+COMMENT ON COLUMN PLANET_MOON.PLANET_ID IS 'Owning planet identifier. Foreign Key.';
+COMMENT ON COLUMN PLANET_MOON.NAME IS 'Name of the planet moon.';
+COMMENT ON COLUMN PLANET_MOON.DISTANCE IS 'Distance of the planet moon.';
+COMMENT ON COLUMN PLANET_MOON.RADIUS IS 'Radius of the planet moon.';
+COMMENT ON COLUMN PLANET_MOON.NOTE IS 'Note of the planet moon.';
