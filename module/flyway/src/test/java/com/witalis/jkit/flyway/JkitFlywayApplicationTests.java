@@ -24,6 +24,7 @@ class JkitFlywayApplicationTests {
     }
 
     @Nested
+    @Disabled("Test [context]: database should be up")
     @Tag("flyway")
     @DisplayName("Test: context")
     class ContextTest {
@@ -48,13 +49,14 @@ class JkitFlywayApplicationTests {
     }
 
     @Nested
+    @Disabled("Test [content]: database should be up")
     @Tag("flyway")
-    @DisplayName("Test: data")
-    class DataTest {
+    @DisplayName("Test: content")
+    class ContentTest {
 
         @Test
-        @DisplayName("Test: data loading")
-        void dataLoads() {
+        @DisplayName("Test: content loading")
+        void contentLoads() {
             var sql = "";
 
             log.info("=========== Flyway: data statistics ==========");
