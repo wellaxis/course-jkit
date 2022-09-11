@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @Tag("flyway")
 @DisplayName("Test: flyway")
 @SpringBootTest
+@Disabled("Test: database should be up")
 class JkitFlywayApplicationTests {
     private final JdbcTemplate jdbcTemplate;
 
@@ -24,7 +25,6 @@ class JkitFlywayApplicationTests {
     }
 
     @Nested
-    @Disabled("Test [context]: database should be up")
     @Tag("flyway")
     @DisplayName("Test: context")
     class ContextTest {
@@ -49,7 +49,6 @@ class JkitFlywayApplicationTests {
     }
 
     @Nested
-    @Disabled("Test [content]: database should be up")
     @Tag("flyway")
     @DisplayName("Test: content")
     class ContentTest {
