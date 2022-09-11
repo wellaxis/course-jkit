@@ -13,6 +13,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Start PostgreSQL
+      run: |
+        sudo systemctl start postgresql.service
+        pg_isready
+    - name: Create scheduler user
+      run: |
+        sudo -u postgres psql --command="CREATE USER jooq PASSWORD 'jooq'" --command="\du"
+    - name: Create timetable database
+      run: |
+        sudo -u postgres createdb --owner=jooq timetable
+        PGPASSWORD=jooq psql --username=jooq --host=localhost --list timetable
     - uses: actions/checkout@v2
     - name: Set up JDK 18
       uses: actions/setup-java@v1
