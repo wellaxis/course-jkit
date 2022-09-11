@@ -14,14 +14,14 @@ order by n.nspname;
 SELECT s.schema_name,
        s.schema_owner
 FROM   information_schema.schemata s
-where  s.catalog_name = 'flyway';
+where  s.catalog_name = 'jooq';
 
 select t.*
 from   pg_tables t
-where  t.tableowner = 'flyway';
+where  t.tableowner = 'jooq';
 
 -- schema
-create schema if not exists astronomy authorization flyway;
+create schema if not exists astronomy authorization jooq;
 
 drop schema astronomy cascade;
 
@@ -41,10 +41,6 @@ select * from planet_attribute;
 select * from planet_moon;
 select * from planet_atmosphere;
 select * from planet_atmosphere_map;
-
--- flyway
-select f.*
-from   astronomy.flyway_schema_history f;
 
 -- apply
 commit;
