@@ -1,12 +1,13 @@
 // project
 rootProject.name = 'course-jkit'
-// usage
+// core
 include ':module:usage'
-// spring-data
+// spring
 include ':module:spring:data:jpa-unidirectional'
 include ':module:spring:data:jpa-bidirectional'
 include ':module:spring:data:jpa-n-plus-one'
 include ':module:spring:data:jpa-pagination'
 include ':module:spring:data:jpa-projection'
-// flyway
+// tools
 include ':module:flyway'
+include ':module:jooq'

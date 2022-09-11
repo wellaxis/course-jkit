@@ -1,0 +1,15 @@
+-- table
+CREATE TABLE PLANET_ATMOSPHERE (
+    ID                   BIGINT NOT NULL,
+    NAME                 VARCHAR(100) NOT NULL,
+    NOTE                 TEXT
+);
+-- sequence
+CREATE SEQUENCE PLANET_ATMOSPHERE_SEQ START WITH 1001 INCREMENT BY 1;
+-- index
+ALTER TABLE PLANET_ATMOSPHERE ADD CONSTRAINT PKPT_ID PRIMARY KEY (ID);
+-- comment
+COMMENT ON TABLE PLANET_ATMOSPHERE IS 'Entity representing planet atmosphere.';
+COMMENT ON COLUMN PLANET_ATMOSPHERE.ID IS 'Planet atmosphere identifier. Primary Key.';
+COMMENT ON COLUMN PLANET_ATMOSPHERE.NAME IS 'Name of the planet atmosphere.';
+COMMENT ON COLUMN PLANET_ATMOSPHERE.NOTE IS 'Note of the planet atmosphere.';
