@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 class JkitJooqDaoTests {
-    private final DSLContext context;
     private PlanetSystemDao planetSystemDao;
     private PlanetDao planetDao;
     private PlanetAttributeDao planetAttributeDao;
@@ -34,9 +33,7 @@ class JkitJooqDaoTests {
     private PlanetAtmosphereMapDao planetAtmosphereMapDao;
 
     @Autowired
-    public JkitJooqDaoTests(final DSLContext dslContext) {
-        this.context = dslContext;
-    }
+    private DSLContext context;
 
     @BeforeAll
     public static void initialization() {

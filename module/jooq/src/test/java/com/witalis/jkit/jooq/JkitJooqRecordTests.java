@@ -36,12 +36,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 class JkitJooqRecordTests {
-    private final DSLContext context;
+    private DSLContext context;
 
     @Autowired
-    public JkitJooqRecordTests(final DSLContext dslContext) {
-        this.context = new DefaultDSLContext(initConfiguration(dslContext));
-    }
+    private DSLContext dslContext;
 
     @BeforeAll
     public static void initialization() {
@@ -50,6 +48,7 @@ class JkitJooqRecordTests {
 
     @BeforeEach
     public void begin() {
+        context = new DefaultDSLContext(initConfiguration(dslContext));
         // cleaning
         delete(context, PLANET_ATMOSPHERE_MAP);
         delete(context, PLANET_ATMOSPHERE);
@@ -371,7 +370,9 @@ class JkitJooqRecordTests {
 
                 log.info("Planet systems, process: {}", count(context, PLANET_SYSTEM));
 
-                delete(planetSystemRecord);
+                PlanetSystemRecord fetchedPlanetSystemRecord = getOne(context, PLANET_SYSTEM, PLANET_SYSTEM.ID.eq(planetSystemRecord.getId()));
+
+                delete(fetchedPlanetSystemRecord);
 
                 log.info("Planet systems, after: {}", count(context, PLANET_SYSTEM));
             }
@@ -421,6 +422,7 @@ class JkitJooqRecordTests {
     @Rollback
     @AfterEach
     public void end() {
+        context = null;
     }
 
     @AfterAll
