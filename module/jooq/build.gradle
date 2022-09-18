@@ -67,7 +67,8 @@ ext.jooq = [
     schema: 'astronomy',
     name: 'org.jooq.meta.postgres.PostgresDatabase',
     directory: projectDir.toString() + '/src/main/java',
-    package: 'com.witalis.jkit.jooq.model'
+    package: 'com.witalis.jkit.jooq.model',
+    generate: false
 ]
 
 import org.jooq.codegen.GenerationTool
@@ -109,7 +110,9 @@ task jooqGenerate() {
                 )
         );
 
-    GenerationTool.generate(configuration);
+    if (jooq.generate) {
+        GenerationTool.generate(configuration)
+    }
 }
 
 task jooqCleaning(type: Delete) {

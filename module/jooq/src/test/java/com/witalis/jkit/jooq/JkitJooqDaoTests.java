@@ -24,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @JooqTest
 @Transactional
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-@Disabled("Test: database should be up")
 class JkitJooqDaoTests {
     private PlanetSystemDao planetSystemDao;
     private PlanetDao planetDao;
