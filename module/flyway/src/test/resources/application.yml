@@ -1,6 +1,6 @@
 # server
 server:
-  address: 0.0.0.0
+  address: localhost
   port: 9000
   servlet:
     context-path: /flyway
@@ -13,22 +13,24 @@ spring:
   output:
     ansi:
       enabled: always
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
   datasource:
-    url: jdbc:postgresql://localhost:5432/flyway
+    url: jdbc:h2:mem:flyway;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
     username: flyway
     password: flyway
-    driver-class-name: org.postgresql.Driver
-    hikari:
-      connection-timeout: 10000
-      maximum-pool-size: 10
-      pool-name: postgres-pool
+    driverClassName: org.h2.Driver
+  jooq:
+    sql-dialect: h2
   jpa:
-    database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database: h2
+    database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: false
     generate-ddl: true
     hibernate:
-      ddl-auto: validate
+      ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
@@ -36,14 +38,14 @@ spring:
     properties:
       hibernate:
         auto_quote_keyword: false
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: false
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
         highlight_sql: true
         generate_statistics: false
         globally_quoted_identifiers: false
         globally_quoted_identifiers_skip_column_definitions: false
         hbm2ddl:
-          auto: validate
+          auto: none
         jdbc:
           batch_size: 50
           batch_versioned_data: true
@@ -52,10 +54,11 @@ spring:
         order_updates: true
         show_sql: true
         use_sql_comments: true
+        default_schema: astronomy
     show-sql: true
   sql:
     init:
-      mode:
+      mode: always
   flyway:
     baseline-version: 1
     baseline-on-migrate: true
@@ -66,10 +69,10 @@ spring:
     sql-migration-prefix: 'v'
     sql-migration-separator: '--'
     table: flyway_schema_history
-    url: 'jdbc:postgresql://localhost:5432/flyway'
+    url: "jdbc:h2:mem:flyway;MODE=PostgreSQL;DB_CLOSE_DELAY=-1"
     user: 'flyway'
     password: 'flyway'
-    schemas: ['astronomy', 'public']
+    schemas: ['astronomy']
     locations: ['classpath:db/migration']
 # logging
 logging:
@@ -80,3 +83,4 @@ logging:
         type:
           descriptor:
             sql: INFO
+      springframework: WARN

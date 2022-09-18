@@ -5,19 +5,17 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.ContextConfiguration;
 
 @Slf4j
 @Tag("flyway")
 @DisplayName("Test: flyway")
 @SpringBootTest
-@Disabled("Test: database should be up")
+@ContextConfiguration
 class JkitFlywayApplicationTests {
-    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public JkitFlywayApplicationTests(final JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    private JdbcTemplate jdbcTemplate;
 
     @BeforeAll
     public static void initialization() {
@@ -37,7 +35,7 @@ class JkitFlywayApplicationTests {
             var sql =
                 """
                 select h.*
-                from   astronomy.flyway_schema_history h
+                from   "astronomy"."flyway_schema_history" h
                 """;
             var map = jdbcTemplate.queryForList(sql);
             map.forEach(
@@ -60,22 +58,11 @@ class JkitFlywayApplicationTests {
 
             log.info("=========== Flyway: data statistics ==========");
 
-            // planet type
-            sql =
-                """
-                select count(*)
-                from   pg_enum e,
-                       pg_type t
-                where  t.oid = e.enumtypid
-                and    t.typname = 'planet_type'
-                """;
-            log.info("Flyway [planet type]: {}", jdbcTemplate.queryForObject(sql, Integer.class));
-
             // planet system
             sql =
                 """
                 select count(*)
-                from   astronomy.planet_system ps
+                from   "astronomy".planet_system ps
                 """;
             log.info("Flyway [planet system]: {}", jdbcTemplate.queryForObject(sql, Integer.class));
 
@@ -83,7 +70,7 @@ class JkitFlywayApplicationTests {
             sql =
                 """
                 select count(*)
-                from   astronomy.planet p
+                from   "astronomy".planet p
                 """;
             log.info("Flyway [planet]: {}", jdbcTemplate.queryForObject(sql, Integer.class));
 
@@ -91,7 +78,7 @@ class JkitFlywayApplicationTests {
             sql =
                 """
                 select count(*)
-                from   astronomy.planet_attribute pa
+                from   "astronomy".planet_attribute pa
                 """;
             log.info("Flyway [planet attribute]: {}", jdbcTemplate.queryForObject(sql, Integer.class));
 
@@ -99,7 +86,7 @@ class JkitFlywayApplicationTests {
             sql =
                 """
                 select count(*)
-                from   astronomy.planet_moon pm
+                from   "astronomy".planet_moon pm
                 """;
             log.info("Flyway [planet moon]: {}", jdbcTemplate.queryForObject(sql, Integer.class));
 
@@ -107,7 +94,7 @@ class JkitFlywayApplicationTests {
             sql =
                 """
                 select count(*)
-                from   astronomy.planet_atmosphere pt
+                from   "astronomy".planet_atmosphere pt
                 """;
             log.info("Flyway [planet atmosphere]: {}", jdbcTemplate.queryForObject(sql, Integer.class));
 
@@ -115,7 +102,7 @@ class JkitFlywayApplicationTests {
             sql =
                 """
                 select count(*)
-                from   astronomy.planet_atmosphere_map ptm
+                from   "astronomy".planet_atmosphere_map ptm
                 """;
             log.info("Flyway [planet atmosphere map]: {}", jdbcTemplate.queryForObject(sql, Integer.class));
 
