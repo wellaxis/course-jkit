@@ -11,3 +11,4 @@ include ':module:spring:data:jpa-projection'
 // tools
 include ':module:flyway'
 include ':module:jooq'
+include ':module:shell'
