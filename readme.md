@@ -9,3 +9,4 @@ Structure of JKit Course Application:
   * [Flyway](/module/flyway/readme.md) - using Flyway database tracker to solve db version control
   * [Jooq](/module/jooq/readme.md) - using jOOQ to build type safe SQL queries through its fluent API
   * [Shell](/module/shell/readme.md) - using CLI functionality for dealing with any problems
+  * [Utils](/module/utils/readme.md) - using different utilities to dealing with specified tasks

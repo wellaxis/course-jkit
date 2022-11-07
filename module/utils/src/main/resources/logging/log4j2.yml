@@ -1,0 +1,123 @@
+configuration:
+  name: 'JKitUtilsLogConfig'
+  status: warn
+  shutdownHook: disable
+  monitorInterval: 300
+  properties:
+    property:
+      - name: APP_NAME
+        value: ${spring:spring.application.name}
+      - name: MODULE_NAME
+        value: 'jkit-utils'
+      - name: PID
+        value: '????'
+      - name: LOG_EXCEPTION_CONVERSION_WORD
+        value: '%xwEx'
+      - name: LOG_LEVEL_PATTERN
+        value: '%5p'
+      - name: LOG_DATEFORMAT_PATTERN
+        value: 'yyyy-MM-dd HH:mm:ss.SSS'
+      - name: CONSOLE_LOG_PATTERN
+        value: '%clr{%d{${LOG_DATEFORMAT_PATTERN}}}{blue} %clr{${LOG_LEVEL_PATTERN}} %clr{${sys:PID}}{magenta} %clr{---}{red} %clr{[%15.15t]}{green} %clr{%-40.40c{1.}}{cyan} %clr{:}{faint} %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}'
+      - name: FILE_LOG_PATTERN
+        value: '%d{${LOG_DATEFORMAT_PATTERN}} ${LOG_LEVEL_PATTERN} ${sys:PID} --- [%t] %-40.40c{1.} : %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}'
+      - name: OPTIMUM_LOG_PATTERN
+        value: '[%d{${LOG_DATEFORMAT_PATTERN}}] [%p] [%t] [%c{1}:%L] - %m%n'
+      - name: FILE_PATH
+        value: $${env:JKIT_HOME}/output/log/utils
+      - name: FILE_NAME
+        value: 'utils.log'
+      - name: ERROR_FILE_NAME
+        value: 'error.log'
+  filters:
+    filter:
+      - type: ThresholdFilter
+        level: trace
+  appenders:
+    Console:
+      name: 'Console'
+      target: SYSTEM_OUT
+      follow: true
+      PatternLayout:
+        pattern: ${sys:CONSOLE_LOG_PATTERN}
+    RollingFile:
+      - name: 'File'
+        fileName: ${FILE_PATH}/${FILE_NAME}
+        filePattern: ${FILE_PATH}/archive/app/utils.%d{yyyy-MM-dd}.%i.log.gz
+        ignoreExceptions: false
+        PatternLayout:
+          pattern: ${sys:FILE_LOG_PATTERN}
+        Policies:
+          OnStartupTriggeringPolicy:
+            minSize: 1
+          SizeBasedTriggeringPolicy:
+            size: '100 MB'
+          TimeBasedTriggeringPolicy:
+            interval: 1
+            modulate: true
+        DefaultRolloverStrategy:
+          Delete:
+            basePath: ${FILE_PATH}/archive
+            maxDepth: 2
+            IfFileName:
+              glob: '*utils.*.log.gz'
+            IfLastModified:
+              age: 'P365D'
+      - name: 'Error'
+        fileName: ${FILE_PATH}/${ERROR_FILE_NAME}
+        filePattern: ${FILE_PATH}/archive/err/error.%d{yyyy-MM-dd}.%i.log.gz
+        ignoreExceptions: false
+        PatternLayout:
+          pattern: ${sys:OPTIMUM_LOG_PATTERN}
+        Policies:
+          SizeBasedTriggeringPolicy:
+            size: '100 MB'
+        DefaultRolloverStrategy:
+          Delete:
+            basePath: ${FILE_PATH}/error
+            maxDepth: 2
+            IfFileName:
+              glob: '*error.*.log.gz'
+            IfLastModified:
+              age: 'P90D'
+  loggers:
+    logger:
+      - name: org.apache.catalina.startup.DigesterFactory
+        level: error
+        additivity: false
+      - name: org.apache.catalina.util.LifecycleBase
+        level: error
+        additivity: false
+      - name: org.apache.coyote.http11.Http11NioProtocol
+        level: warn
+        additivity: false
+      - name: org.apache.sshd.common.util.SecurityUtils
+        level: warn
+        additivity: false
+      - name: org.apache.tomcat.util.net.NioSelectorPool
+        level: warn
+        additivity: false
+      - name: org.eclipse.jetty.util.component.AbstractLifeCycle
+        level: error
+        additivity: false
+      - name: org.hibernate.validator.internal.util.Version
+        level: warn
+        additivity: false
+      - name: org.springframework.boot.actuate.endpoint.jmx
+        level: warn
+        additivity: false
+      - name: com.witalis.jkit.utils
+        level: info
+        additivity: true
+        appender-ref:
+          - ref: 'File'
+            level: info
+          - ref: 'Error'
+            level: error
+    root:
+      level: info
+      appender-ref:
+        - ref: 'Console'
+          level: info
+        - ref: 'Error'
+          level: error

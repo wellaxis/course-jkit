@@ -1,0 +1,14 @@
+# spring
+spring:
+  application:
+    name: jkit-utils
+  banner:
+    location: classpath:banner/banner.txt
+  main:
+    banner-mode: log
+  output:
+    ansi:
+      enabled: always
+# logging
+logging:
+  config: classpath:logging/log4j2.yml

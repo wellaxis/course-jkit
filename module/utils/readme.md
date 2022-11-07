@@ -1,16 +1,16 @@
-#                        Usage Application
+#                        Utils Application
 
 Goal of project
 ---------------
 
-> It is necessary to implement the Java language features and concepts
- for learning purposes & to solve various tasks into usage module [Usage][link].
+> It is necessary to develop the java utilities features
+for other modules [Utils][link].
 ***
 
 Structure
 ---------
 
-- usage [root application directory]
+- utils [root application directory]
     - bin [folder contains batch files]
     - log [folder contains module logs]
     - res [folder contains results of run]
@@ -42,13 +42,11 @@ Structure
 Application is currently consists of two subdirectories
     - `main` (source classes and resources)
     - `test` (test classes and resources)
-Main directory contains all classes to process application functionality.
-Test directory contains all classes to process all unit, functional and integration tests. 
+Main directory contains all classes to process application functionality, test directory contains all classes to process all unit, functional and integration tests.
 
 Todos
 -----
-* To reprocess all chapters into the book
-* To implement the new java features
+* To develop back-end features
 ***
 
-[link]: <https://en.wikipedia.org/wiki/usage>
+[link]: <https://en.wikipedia.org/wiki/utils>

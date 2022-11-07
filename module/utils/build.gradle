@@ -1,0 +1,32 @@
+// application
+mainClassName = "com.witalis.jkit.utils.JkitUtilsApplication"
+
+// extension
+ext {
+    groupId = "utils"
+    moduleId = "com.witalis.jkit.utils"
+}
+
+// repository
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url "https://repo.spring.io/milestone"
+    }
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
+}
+
+// dependency
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-tomcat"
+    // database
+    implementation "com.oracle.database.jdbc:ojdbc10:19+"
+    // utilities
+    implementation "org.jsonschema2pojo:jsonschema2pojo-core:1.+"
+    implementation "org.apache.velocity:velocity:1.+"
+    implementation "javax.mail:mail:1.+"
+    implementation "commons-codec:commons-codec:1.+"
+}

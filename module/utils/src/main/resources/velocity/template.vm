@@ -1,0 +1,7 @@
+## Шаблон с именем template.vm
+<html>
+    <body>
+        ## $foo - это переменная шаблона
+        Hello $foo World!
+    </body>
+</html>
