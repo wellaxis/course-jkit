@@ -31,7 +31,7 @@ dependencies {
     implementation 'org.postgresql:postgresql:42.+'
     implementation 'com.zaxxer:HikariCP:5.+'
     implementation "com.h2database:h2:2.+"
-    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.flywaydb:flyway-core:8+'
     // boot
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-web'
