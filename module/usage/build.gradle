@@ -7,18 +7,6 @@ ext {
     moduleId = "com.witalis.jkit.usage.core"
 }
 
-// repository
-repositories {
-    mavenLocal()
-    mavenCentral()
-    maven {
-        url "https://repo.spring.io/milestone"
-    }
-    maven {
-        url "https://plugins.gradle.org/m2/"
-    }
-}
-
 // dependency
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-tomcat"

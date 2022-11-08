@@ -7,23 +7,9 @@ ext {
     moduleId = 'com.witalis.jkit.shell'
 }
 
-// repository
-repositories {
-    mavenLocal()
-    mavenCentral()
-}
-
 // dependency
 dependencies {
-    // boot
-    implementation "org.springframework.boot:spring-boot-starter-log4j2"
     // shell
     implementation 'org.springframework.shell:spring-shell-starter:2.+'
     implementation 'org.springframework.shell:spring-shell-core:2.+'
-    // lombok
-    compileOnly "org.projectlombok:lombok:1.+"
-    annotationProcessor "org.projectlombok:lombok:1.+"
-    // lombok
-    testCompileOnly "org.projectlombok:lombok:1.+"
-    testAnnotationProcessor "org.projectlombok:lombok:1.+"
 }

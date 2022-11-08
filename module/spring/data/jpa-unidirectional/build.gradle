@@ -7,12 +7,6 @@ ext {
     moduleId = "com.witalis.jkit.spring.data.jpa.unidirectional"
 }
 
-// repository
-repositories {
-    mavenLocal()
-    mavenCentral()
-}
-
 // dependency
 dependencies {
     // database
