@@ -17,7 +17,7 @@ process:
   invoker:
     activate: true
     sections:
-      - generics
+      - patterns
   handler:
     activate: false
     sections:

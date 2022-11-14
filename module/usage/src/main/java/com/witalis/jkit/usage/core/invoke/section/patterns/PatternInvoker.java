@@ -238,6 +238,12 @@ public class PatternInvoker extends Invoker {
                 var serial = Singleton8Serialized.getInstance();
                 log.info("- Serialized: {}", serial);
             }
+
+            // virtual proxy - functional supplier to replace singleton factory on create
+            {
+                var proxy = Singleton9VirtualProxy.getInstance();
+                log.info("- Proxy: {}", proxy);
+            }
         }
     }
 
