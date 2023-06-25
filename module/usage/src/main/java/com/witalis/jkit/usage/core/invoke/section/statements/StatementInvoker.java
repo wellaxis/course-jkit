@@ -416,6 +416,8 @@ public class StatementInvoker extends Invoker {
             };
 
             // parenthesized pattern - for additional checks
+            // feature preview - to enable
+            /*
             Object result = switch (object) {
                 case null -> 0L;
                 case Integer i when i >= 0 -> i.hashCode();
@@ -429,6 +431,8 @@ public class StatementInvoker extends Invoker {
                 case int[] a -> Arrays.hashCode(a);
                 default -> 1L;
             };
+            */
+            Object result = "Enable feature preview";
             log.info("* Switch [pattern matching]: {}", result);
         }
 

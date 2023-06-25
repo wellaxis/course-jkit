@@ -5,13 +5,13 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'gradle.plugin.org.flywaydb:gradle-plugin-publishing:9+'
+        classpath 'gradle.plugin.org.flywaydb:gradle-plugin-publishing:9.19.0'
     }
 }
 
 // plugin
 plugins {
-    id 'org.flywaydb.flyway' version '9.14.1'
+    id 'org.flywaydb.flyway' version '9.19.0'
 }
 
 // application
@@ -29,7 +29,7 @@ dependencies {
     implementation 'org.postgresql:postgresql:42.+'
     implementation 'com.zaxxer:HikariCP:5.+'
     implementation "com.h2database:h2:2.+"
-    implementation 'org.flywaydb:flyway-core:9+'
+    implementation 'org.flywaydb:flyway-core:9.19.0'
     // boot
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-web'
