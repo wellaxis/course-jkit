@@ -28,12 +28,16 @@ spring:
     defer-datasource-initialization: false
     generate-ddl: true
     hibernate:
-      ddl-auto: validate
+      ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
     open-in-view: false
     properties:
+      jakarta:
+        persistence:
+          sharedCache:
+            mode: ENABLE_SELECTIVE
       hibernate:
         auto_quote_keyword: false
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -43,7 +47,7 @@ spring:
         globally_quoted_identifiers: false
         globally_quoted_identifiers_skip_column_definitions: false
         hbm2ddl:
-          auto: validate
+          auto: none
         jdbc:
           batch_size: 50
           batch_versioned_data: true

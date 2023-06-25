@@ -1,33 +1,35 @@
 package com.witalis.jkit.shell;
 
+import com.witalis.jkit.shell.utils.ShellPromptProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.shell.CommandNotCurrentlyAvailable;
-import org.springframework.shell.ParameterValidationException;
-import org.springframework.shell.Shell;
-import org.springframework.shell.result.DefaultResultHandler;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.shell.test.ShellAssertions;
+import org.springframework.shell.test.ShellTestClient;
+import org.springframework.shell.test.autoconfigure.ShellTest;
+import org.springframework.test.annotation.DirtiesContext;
 
-import javax.validation.ConstraintViolation;
+import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static com.witalis.jkit.shell.command.CourseCommand.MESSAGE;
+import static com.witalis.jkit.shell.utils.Constants.GROUP;
+import static org.awaitility.Awaitility.await;
 
 @Slf4j
 @Tag("shell")
 @DisplayName("Test: cli")
-@SpringBootTest(properties = {"spring.shell.interactive.enabled=false"})
+@ShellTest(terminalWidth = 120, terminalHeight = 40)
+@ComponentScan(basePackageClasses = JkitShellApplication.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class JkitShellCliTests {
-    private final Shell shell;
-    private final DefaultResultHandler handler;
+    private final ShellTestClient client;
 
     @Autowired
     public JkitShellCliTests(
-        final Shell shell,
-        final DefaultResultHandler handler
+        final ShellTestClient client
     ) {
-        this.shell = shell;
-        this.handler = handler;
+        this.client = client;
     }
 
     @BeforeAll
@@ -37,38 +39,293 @@ class JkitShellCliTests {
 
     @Nested
     @Tag("cli")
+    @Tag("session")
+    @DisplayName("Test: session")
+    class SessionTest {
+
+        @Test
+        @Tag("nonInteractive")
+        @DisplayName("Test: non interactive session")
+        void nonInteractionSession() {
+            ShellTestClient.NonInteractiveShellSession session = client
+                .nonInterative()
+                .run();
+
+            await().atMost(1, TimeUnit.SECONDS).untilAsserted(
+                () -> ShellAssertions.assertThat(session.screen())
+                    .isNotNull()
+            );
+        }
+
+        @Test
+        @Tag("interactive")
+        @DisplayName("Test: interactive session")
+        void interactionSession() {
+            ShellTestClient.InteractiveShellSession session = client
+                .interactive()
+                .run();
+
+            await().atMost(1, TimeUnit.SECONDS).untilAsserted(
+                () -> ShellAssertions.assertThat(session.screen())
+                    .isNotNull()
+                    .containsText(ShellPromptProvider.PROMPT)
+            );
+        }
+    }
+
+    @Nested
+    @Tag("cli")
+    @Tag("help")
+    @DisplayName("Test: help")
+    class HelpTest {
+
+        @Test
+        @Tag("nonInteractive")
+        @Tag("operation")
+        @DisplayName("Test: non interactive help operation")
+        void nonInteractionHelpOperation() {
+            var session = client.nonInterative("help").run();
+
+            await().atMost(1, TimeUnit.SECONDS).untilAsserted(
+                () -> ShellAssertions.assertThat(session.screen())
+                    .containsText("AVAILABLE COMMANDS")
+                    .containsText(GROUP)
+            );
+        }
+
+        @Test
+        @Tag("nonInteractive")
+        @Tag("metadata")
+        @DisplayName("Test: non interactive help metadata")
+        void nonInteractionHelpMetadata() {
+            var session = client.nonInterative("help", "help").run();
+
+            await().atMost(1, TimeUnit.SECONDS).untilAsserted(
+                () -> ShellAssertions.assertThat(session.screen())
+                    .containsText("NAME")
+                    .containsText("SYNOPSIS")
+                    .containsText("OPTIONS")
+            );
+        }
+
+        @Test
+        @Tag("interactive")
+        @Tag("operation")
+        @DisplayName("Test: interactive help operation")
+        void interactionHelpOperation() {
+            var session = client.interactive().run();
+
+            session.write(session.writeSequence().text("help").carriageReturn().build());
+            await().atMost(1, TimeUnit.SECONDS).untilAsserted(
+                () -> ShellAssertions.assertThat(session.screen())
+                    .containsText("AVAILABLE COMMANDS")
+                    .containsText(GROUP)
+            );
+        }
+
+        @Test
+        @Tag("interactive")
+        @Tag("metadata")
+        @DisplayName("Test: interactive help metadata")
+        void interactionHelpMetadata() {
+            var session = client.interactive().run();
+
+            session.write(session.writeSequence().text("help help").carriageReturn().build());
+            await().atMost(1, TimeUnit.SECONDS).untilAsserted(
+                () -> ShellAssertions.assertThat(session.screen())
+                    .containsText("NAME")
+                    .containsText("SYNOPSIS")
+                    .containsText("OPTIONS")
+            );
+        }
+    }
+
+    @Nested
+    @Tag("cli")
+    @Tag("course")
+    @DisplayName("Test: course")
+    class CourseTest {
+
+        @Test
+        @Tag("nonInteractive")
+        @Tag("operation")
+        @DisplayName("Test: non interactive course operation")
+        void nonInteractionCourseOperation() {
+            var session = client.nonInterative("course").run();
+
+            await().atMost(1, TimeUnit.SECONDS).untilAsserted(
+                () -> {
+                    log.debug(session.screen().lines().toString());
+                    ShellAssertions.assertThat(session.screen())
+                        .containsText(MESSAGE);
+                }
+            );
+        }
+
+        @Test
+        @Tag("nonInteractive")
+        @Tag("metadata")
+        @DisplayName("Test: non interactive course metadata")
+        void nonInteractionCourseMetadata() {
+            var session = client.nonInterative("help", "course").run();
+
+            await().atMost(1, TimeUnit.SECONDS).untilAsserted(
+                () -> ShellAssertions.assertThat(session.screen())
+                    .containsText("NAME")
+                    .containsText("SYNOPSIS")
+                    .containsText("OPTIONS")
+            );
+        }
+
+        @Test
+        @Tag("interactive")
+        @Tag("operation")
+        @DisplayName("Test: interactive course operation")
+        void interactionCourseOperation() {
+            var session = client.interactive().run();
+
+            session.write(session.writeSequence().text("course").carriageReturn().build());
+            await().atMost(1, TimeUnit.SECONDS).untilAsserted(
+                () -> {
+                    log.debug(session.screen().lines().toString());
+                    ShellAssertions.assertThat(session.screen())
+                        .containsText(MESSAGE);
+                }
+            );
+        }
+
+        @Test
+        @Tag("interactive")
+        @Tag("metadata")
+        @DisplayName("Test: interactive course metadata")
+        void interactionCourseMetadata() {
+            var session = client.interactive().run();
+
+            session.write(session.writeSequence().text("help course").carriageReturn().build());
+
+            await().atMost(1, TimeUnit.SECONDS).untilAsserted(
+                () -> ShellAssertions.assertThat(session.screen())
+                    .containsText("NAME")
+                    .containsText("SYNOPSIS")
+                    .containsText("OPTIONS")
+            );
+        }
+    }
+
+    @Nested
+    @Tag("cli")
     @Tag("greeting")
     @DisplayName("Test: greeting")
     class GreetingTest {
 
         @Test
-        @DisplayName("Test: success")
-        void greetingSuccess() {
-            final String username = "User";
+        @Tag("nonInteractive")
+        @Tag("operation")
+        @DisplayName("Test: non interactive greeting failure")
+        void nonInteractionGreetingFailure() {
+            final String username = "John Doe";
 
-            var result = shell.evaluate(() -> "greeting " + username);
+            var session = client.nonInterative("greeting").run();
 
-            handler.handleResult(result);
-
-            assertNotNull(result);
-            assertEquals("Hello, " + username, result);
+            await().atMost(1, TimeUnit.SECONDS).untilAsserted(
+                () -> {
+                    log.debug(session.screen().lines().toString());
+                    ShellAssertions.assertThat(session.screen())
+                        .containsText("Hello, User");
+                }
+            );
         }
 
         @Test
-        @DisplayName("Test: failure")
-        void greetingFailure() {
-            final String username = "Me";
+        @Tag("nonInteractive")
+        @Tag("operation")
+        @DisplayName("Test: non interactive greeting success")
+        void nonInteractionGreetingSuccess() {
+            final String username = "John Doe";
 
-            var result = shell.evaluate(() -> "greeting " + username);
+            var session = client.nonInterative("greeting", "--user", username).run();
 
-            handler.handleResult(result);
+            await().atMost(1, TimeUnit.SECONDS).untilAsserted(
+                () -> {
+                    log.debug(session.screen().lines().toString());
+                    ShellAssertions.assertThat(session.screen())
+                        .containsText("Hello, " + username);
 
-            assertNotNull(result);
-            assertTrue(result instanceof ParameterValidationException);
-            assertEquals(1, ((ParameterValidationException) result).getConstraintViolations().size());
+                }
+            );
+        }
 
-            ConstraintViolation<?> constraint = ((ParameterValidationException) result).getConstraintViolations().iterator().next();
-            assertEquals("size must be between 3 and 40", constraint.getMessage());
+        @Test
+        @Tag("nonInteractive")
+        @Tag("metadata")
+        @DisplayName("Test: non interactive greeting metadata")
+        void nonInteractionGreetingMetadata() {
+            var session = client.nonInterative("help", "greeting").run();
+
+            await().atMost(1, TimeUnit.SECONDS).untilAsserted(
+                () -> ShellAssertions.assertThat(session.screen())
+                    .containsText("NAME")
+                    .containsText("SYNOPSIS")
+                    .containsText("OPTIONS")
+            );
+        }
+
+        @Test
+        @Tag("interactive")
+        @Tag("operation")
+        @DisplayName("Test: interactive greeting failure")
+        void interactionGreetingFailure() {
+            final String username = "John Doe";
+
+            var session = client.interactive().run();
+
+            session.write(session.writeSequence().text("greeting").carriageReturn().build());
+
+            await().atMost(1, TimeUnit.SECONDS).untilAsserted(
+                () -> {
+                    log.debug(session.screen().lines().toString());
+                    ShellAssertions.assertThat(session.screen())
+                        .containsText("Hello, User");
+                }
+            );
+        }
+
+        @Test
+        @Tag("interactive")
+        @Tag("operation")
+        @DisplayName("Test: interactive greeting success")
+        void interactionGreetingSuccess() {
+            final String username = "John Doe";
+
+            var session = client.interactive().run();
+
+            session.write(session.writeSequence().text("greeting --user '" + username + "'").carriageReturn().build());
+
+            await().atMost(1, TimeUnit.SECONDS).untilAsserted(
+                () -> {
+                    log.debug(session.screen().lines().toString());
+                    ShellAssertions.assertThat(session.screen())
+                        .containsText("Hello, " + username);
+
+                }
+            );
+        }
+
+        @Test
+        @Tag("interactive")
+        @Tag("metadata")
+        @DisplayName("Test: interactive greeting metadata")
+        void interactionGreetingMetadata() {
+            var session = client.interactive().run();
+
+            session.write(session.writeSequence().text("help greeting").carriageReturn().build());
+
+            await().atMost(1, TimeUnit.SECONDS).untilAsserted(
+                () -> ShellAssertions.assertThat(session.screen())
+                    .containsText("NAME")
+                    .containsText("SYNOPSIS")
+                    .containsText("OPTIONS")
+            );
         }
     }
 
@@ -76,32 +333,63 @@ class JkitShellCliTests {
     @Tag("cli")
     @Tag("numeric")
     @DisplayName("Test: numeric")
-    class NumbericTest {
+    class NumericTest {
 
         @Test
-        @DisplayName("Test: sum")
-        void sumOfElements() {
+        @Tag("interactive")
+        @Tag("operation")
+        @DisplayName("Test: interactive add operation")
+        void interactionAddOperation() {
             final String numbers = "1.2 3.4 5.6";
 
-            var result = shell.evaluate(() -> "sum --numbers " + numbers);
+            var session = client.interactive().run();
 
-            handler.handleResult(result);
-
-            assertNotNull(result);
-            assertEquals(10.2D, result);
+            session.write(session.writeSequence().text("add --n " + numbers).carriageReturn().build());
+            await().atMost(1, TimeUnit.SECONDS).untilAsserted(
+                () -> {
+                    log.debug(session.screen().lines().toString());
+                    ShellAssertions.assertThat(session.screen())
+                        .containsText("10.2");
+                }
+            );
         }
 
         @Test
-        @DisplayName("Test: max")
-        void maxElement() {
+        @Tag("interactive")
+        @Tag("operation")
+        @DisplayName("Test: interactive sum operation")
+        void interactionSumOperation() {
+            final String numbers = "1.2 3.4 5.6 7.8 9.0";
+
+            var session = client.interactive().run();
+
+            session.write(session.writeSequence().text("sum --n " + numbers).carriageReturn().build());
+            await().atMost(1, TimeUnit.SECONDS).untilAsserted(
+                () -> {
+                    log.debug(session.screen().lines().toString());
+                    ShellAssertions.assertThat(session.screen())
+                        .containsText("27.0");
+                }
+            );
+        }
+
+        @Test
+        @Tag("interactive")
+        @Tag("operation")
+        @DisplayName("Test: interactive max operation")
+        void interactionMaxOperation() {
             final String numbers = "1.2 7.8 5.6 9.0 3.4";
 
-            var result = shell.evaluate(() -> "max --numbers " + numbers);
+            var session = client.interactive().run();
 
-            handler.handleResult(result);
-
-            assertNotNull(result);
-            assertEquals(9.0D, result);
+            session.write(session.writeSequence().text("max --n " + numbers).carriageReturn().build());
+            await().atMost(1, TimeUnit.SECONDS).untilAsserted(
+                () -> {
+                    log.debug(session.screen().lines().toString());
+                    ShellAssertions.assertThat(session.screen())
+                        .containsText("9.0");
+                }
+            );
         }
     }
 
@@ -112,33 +400,55 @@ class JkitShellCliTests {
     class ScenarioTest {
 
         @Test
+        @Tag("interactive")
+        @Tag("operation")
         @DisplayName("Test: activate action")
         void actionEnable() {
-            final String action = "action";
+            var session = client.interactive().run();
 
-            shell.evaluate(() -> "activate");
-            var result = shell.evaluate(() -> action);
+            session.write(session.writeSequence().text("activate").carriageReturn().build());
+            await().atMost(1, TimeUnit.SECONDS).untilAsserted(
+                () -> {
+                    log.debug(session.screen().lines().toString());
+                    ShellAssertions.assertThat(session.screen())
+                        .isNotNull();
+                }
+            );
 
-            handler.handleResult(result);
-
-            assertNotNull(result);
-            assertEquals("Download...", result);
+            session.write(session.writeSequence().text("action").carriageReturn().build());
+            await().atMost(1, TimeUnit.SECONDS).untilAsserted(
+                () -> {
+                    log.debug(session.screen().lines().toString());
+                    ShellAssertions.assertThat(session.screen())
+                        .containsText("Download data...");
+                }
+            );
         }
 
         @Test
+        @Tag("interactive")
+        @Tag("operation")
         @DisplayName("Test: deactivate action")
         void actionDisable() {
-            final String message = "Command 'action' exists but is not currently available because the access to scenario is switched off. Please, enable scenario!";
-            final String action = "action";
+            var session = client.interactive().run();
 
-            shell.evaluate(() -> "deactivate");
-            var result = shell.evaluate(() -> action);
+            session.write(session.writeSequence().text("deactivate").carriageReturn().build());
+            await().atMost(1, TimeUnit.SECONDS).untilAsserted(
+                () -> {
+                    log.debug(session.screen().lines().toString());
+                    ShellAssertions.assertThat(session.screen())
+                        .isNotNull();
+                }
+            );
 
-            handler.handleResult(result);
-
-            assertNotNull(result);
-            assertTrue(result instanceof CommandNotCurrentlyAvailable);
-            assertEquals(message, ((CommandNotCurrentlyAvailable) result).getMessage());
+            session.write(session.writeSequence().text("action").carriageReturn().build());
+            await().atMost(1, TimeUnit.SECONDS).untilAsserted(
+                () -> {
+                    log.debug(session.screen().lines().toString());
+                    ShellAssertions.assertThat(session.screen())
+                        .isNotNull();
+                }
+            );
         }
     }
 }

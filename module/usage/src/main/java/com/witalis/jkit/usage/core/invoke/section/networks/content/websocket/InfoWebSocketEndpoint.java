@@ -2,7 +2,7 @@ package com.witalis.jkit.usage.core.invoke.section.networks.content.websocket;
 
 import lombok.extern.slf4j.Slf4j;
 
-import javax.websocket.*;
+import jakarta.websocket.*;
 import java.util.concurrent.CountDownLatch;
 
 @Slf4j

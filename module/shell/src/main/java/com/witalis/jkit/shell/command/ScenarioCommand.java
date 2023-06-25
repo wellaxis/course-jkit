@@ -1,12 +1,14 @@
 package com.witalis.jkit.shell.command;
 
 import com.witalis.jkit.shell.service.ScenarioService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellMethodAvailability;
+
+import static com.witalis.jkit.shell.utils.Constants.GROUP;
+import static com.witalis.jkit.shell.utils.Constants.PREFIX;
 
 @ShellComponent
 public class ScenarioCommand {
@@ -19,9 +21,9 @@ public class ScenarioCommand {
 
     @ShellMethod(
         key = "activate",
-        prefix = "--",
+        prefix = PREFIX,
         value = "Scenario activation",
-        group = "Jkit"
+        group = GROUP
     )
     public void activate() {
         scenarioService.activate();
@@ -29,9 +31,9 @@ public class ScenarioCommand {
 
     @ShellMethod(
         key = "deactivate",
-        prefix = "--",
+        prefix = PREFIX,
         value = "Scenario deactivation",
-        group = "Jkit"
+        group = GROUP
     )
     public void deactivate() {
         scenarioService.deactivate();
@@ -39,9 +41,9 @@ public class ScenarioCommand {
 
     @ShellMethod(
         key = "action",
-        prefix = "--",
+        prefix = PREFIX,
         value = "Scenario action",
-        group = "Jkit"
+        group = GROUP
     )
     @ShellMethodAvailability("checkActionValidity")
     public String action() {

@@ -36,6 +36,10 @@ spring:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
     open-in-view: false
     properties:
+      jakarta:
+        persistence:
+          sharedCache:
+            mode: ENABLE_SELECTIVE
       hibernate:
         auto_quote_keyword: false
         dialect: org.hibernate.dialect.H2Dialect

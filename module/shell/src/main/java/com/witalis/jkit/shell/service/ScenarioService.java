@@ -35,6 +35,6 @@ public class ScenarioService {
      */
     public String action() {
         log.info("Scenario [action]: download");
-        return "Download...";
+        return activated ? "Download data..." : "Access denied...";
     }
 }

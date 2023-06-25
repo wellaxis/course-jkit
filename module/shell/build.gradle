@@ -10,6 +10,10 @@ ext {
 // dependency
 dependencies {
     // shell
-    implementation 'org.springframework.shell:spring-shell-starter:2.+'
-    implementation 'org.springframework.shell:spring-shell-core:2.+'
+    implementation 'org.springframework.shell:spring-shell-starter:3.+'
+    implementation 'org.springframework.shell:spring-shell-core:3.+'
+    testImplementation 'org.springframework.shell:spring-shell-test:3.+'
+    testImplementation 'org.springframework.shell:spring-shell-test-autoconfigure:3.+'
+    // other
+    testImplementation 'org.awaitility:awaitility:4.+'
 }

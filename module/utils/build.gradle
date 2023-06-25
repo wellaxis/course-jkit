@@ -11,10 +11,10 @@ ext {
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-tomcat"
     // database
-    implementation "com.oracle.database.jdbc:ojdbc10:19+"
+    implementation "com.oracle.database.jdbc:ojdbc11:21+"
     // utilities
     implementation "org.jsonschema2pojo:jsonschema2pojo-core:1.+"
     implementation "org.apache.velocity:velocity:1.+"
-    implementation "javax.mail:mail:1.+"
+    implementation "jakarta.mail:jakarta.mail-api:2+"
     implementation "commons-codec:commons-codec:1.+"
 }

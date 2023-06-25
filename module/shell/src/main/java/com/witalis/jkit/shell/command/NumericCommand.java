@@ -1,11 +1,14 @@
 package com.witalis.jkit.shell.command;
 
 import com.witalis.jkit.shell.service.NumericService;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.shell.context.InteractionMode;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+
+import static com.witalis.jkit.shell.utils.Constants.GROUP;
+import static com.witalis.jkit.shell.utils.Constants.PREFIX;
 
 @ShellComponent
 public class NumericCommand {
@@ -17,16 +20,33 @@ public class NumericCommand {
     }
 
     @ShellMethod(
+        key = "add",
+        prefix = PREFIX,
+        value = "Add three numbers",
+        group = GROUP,
+        interactionMode = InteractionMode.ALL
+    )
+    public double add(
+        @ShellOption(
+            value = {"--numbers", "--n"},
+            arity = 3,
+            help = "Three numbers to calculate their sum"
+        ) double[] numbers
+    ) {
+        return numericService.sum(numbers);
+    }
+
+    @ShellMethod(
         key = "sum",
-        prefix = "--",
+        prefix = PREFIX,
         value = "Sum of numbers",
-        group = "Jkit"
+        group = GROUP,
+        interactionMode = InteractionMode.ALL
     )
     public double sum(
         @ShellOption(
             value = {"--numbers", "--n"},
-            arity = 3,
-            defaultValue = "three numbers should be specified"
+            help = "Any count of numbers to calculate their sum"
         ) double[] numbers
     ) {
         return numericService.sum(numbers);
@@ -34,15 +54,16 @@ public class NumericCommand {
 
     @ShellMethod(
         key = "max",
-        prefix = "--",
+        prefix = PREFIX,
         value = "Max of numbers",
-        group = "Jkit"
+        group = GROUP,
+        interactionMode = InteractionMode.ALL
     )
     public double max(
         @ShellOption(
             value = {"--numbers", "--n"},
             arity = 4,
-            defaultValue = "three numbers should be specified"
+            help = "Four numbers to calculate their max"
         ) double[] numbers
     ) {
         return numericService.max(numbers);

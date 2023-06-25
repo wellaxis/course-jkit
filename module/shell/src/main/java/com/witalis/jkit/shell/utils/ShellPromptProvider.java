@@ -1,13 +1,13 @@
-package com.witalis.jkit.shell.service;
+package com.witalis.jkit.shell.utils;
 
 import org.jline.utils.AttributedString;
 import org.jline.utils.AttributedStyle;
 import org.springframework.shell.jline.PromptProvider;
-import org.springframework.stereotype.Service;
+import org.springframework.shell.standard.ShellComponent;
 
-@Service
+@ShellComponent
 public class ShellPromptProvider implements PromptProvider {
-    public static final String PROMPT = "jkit~";
+    public static final String PROMPT = "jkit |>";
 
     @Override
     public AttributedString getPrompt() {

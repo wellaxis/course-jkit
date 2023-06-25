@@ -7,7 +7,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
@@ -396,14 +398,35 @@ public class StatementInvoker extends Invoker {
 
         // pattern matching - need to enable preview
         {
-            Object object = "java.lang.String";
+            final var random = ThreadLocalRandom.current();
+
+            int type = random.nextInt(1, 10);
+            Object object = switch (type) {
+                case 1 -> 10;
+                case 2 -> -10L;
+                case 3 -> 10F;
+                case 4 -> -10D;
+                case 5 -> "Ok";
+                case 6 -> true;
+                case 7 -> Instant.now();
+                case 8 -> new int[0];
+                case 9 -> "";
+                case 10 -> '0';
+                default -> null;
+            };
+
             // parenthesized pattern - for additional checks
             Object result = switch (object) {
-                case Integer i && i >= 0 -> i.hashCode();
-                case Float f -> f.hashCode();
-                case String s && s.length() > 0 -> s.hashCode();
-                case Long l -> l.hashCode();
                 case null -> 0L;
+                case Integer i when i >= 0 -> i.hashCode();
+                case Long l -> l.hashCode();
+                case Float f -> f.hashCode();
+                case Double d when d % 2 == 0 -> d.hashCode();
+                case Number n -> n.hashCode();
+                case String s when s.length() > 0 -> s.hashCode();
+                case Character c when Character.isDigit(c) -> c.hashCode();
+                case Instant t -> t.hashCode();
+                case int[] a -> Arrays.hashCode(a);
                 default -> 1L;
             };
             log.info("* Switch [pattern matching]: {}", result);

@@ -3,10 +3,10 @@ plugins {
     id 'java'
     id 'application'
     id 'distribution'
-    id 'org.springframework.boot' version '2.7.5'
+    id 'org.springframework.boot' version '3.1.1'
     id 'io.spring.dependency-management' version '1.1.0'
     id 'net.nemerosa.versioning' version '3.0.0'
-    id 'org.sonarqube' version '3.5.0.2730'
+    id 'org.sonarqube' version '4.2.1.3168'
 }
 
 // extension
@@ -52,10 +52,10 @@ jar {
 // all projects
 allprojects {
     group = "com.witalis.jkit"
-    version = "1.0.0"
+    version = "1.0.2"
     // compatibility
-    sourceCompatibility = JavaVersion.VERSION_18
-    targetCompatibility = JavaVersion.VERSION_18
+    sourceCompatibility = JavaVersion.VERSION_20
+    targetCompatibility = JavaVersion.VERSION_20
 }
 
 // sub projects
@@ -73,13 +73,13 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
     // preview
     if (project.preview) {
-        tasks.withType(JavaCompile) {
+        tasks.withType(JavaCompile).configureEach {
             it.options.compilerArgs += "--enable-preview"
         }
-        tasks.withType(Test) {
+        tasks.withType(Test).configureEach {
             jvmArgs += "--enable-preview"
         }
-        tasks.withType(JavaExec) {
+        tasks.withType(JavaExec).configureEach {
             jvmArgs += "--enable-preview"
         }
     }
@@ -88,7 +88,7 @@ subprojects {
         buildInfo()
     }
     // configuration
-    configurations.all {
+    configurations.configureEach {
         transitive = true
         exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
         exclude group: "org.junit.vintage", module: "junit-vintage-engine"
@@ -119,16 +119,14 @@ subprojects {
         implementation "org.springframework.boot:spring-boot-starter"
         implementation "org.springframework.boot:spring-boot-starter-log4j2"
         annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-        implementation "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3"
         testImplementation "org.springframework.boot:spring-boot-starter-test"
         // lombok
         compileOnly "org.projectlombok:lombok:1.+"
         annotationProcessor "org.projectlombok:lombok:1.+"
-        // lombok
         testCompileOnly "org.projectlombok:lombok:1.+"
         testAnnotationProcessor "org.projectlombok:lombok:1.+"
         // other
-        implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.+'
+        implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'
     }
     // testing
     test {
@@ -156,7 +154,7 @@ subprojects {
 }
 
 // information
-task information {
+tasks.register('information') {
     doFirst {
         println "JKIT course: BEGIN"
     }

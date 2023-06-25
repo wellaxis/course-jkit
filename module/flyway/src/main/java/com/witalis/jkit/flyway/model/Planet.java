@@ -1,12 +1,8 @@
 package com.witalis.jkit.flyway.model;
 
-import com.witalis.jkit.flyway.utils.EnumTypeMapper;
-
+import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 
-import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,7 +17,6 @@ import java.util.Set;
 @ToString
 @Table(name = "PLANET", schema = "ASTRONOMY")
 @Entity(name = "Planet")
-@TypeDef(name = "postgresql_enum", typeClass = EnumTypeMapper.class)
 public class Planet implements Serializable {
     @Serial
     private static final long serialVersionUID = 1916935031700303477L;
@@ -44,7 +39,6 @@ public class Planet implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "TYPE", length = 20)
-    @Type(type = "postgresql_enum")
     private PlanetType type;
 
     @Basic

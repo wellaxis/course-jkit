@@ -2,7 +2,7 @@ package com.witalis.jkit.spring.data.jpa.bidirectional.model;
 
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
